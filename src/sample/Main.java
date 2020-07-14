@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
 
 public class Main extends Application{
@@ -36,7 +35,10 @@ public class Main extends Application{
         choiceBox.getItems().addAll("Bacon", "Ham", "Meatball");
         // set default value
         choiceBox.setValue("Apple");
-        button.setOnAction(e->getChoice(choiceBox));
+        // Listen for selection changes
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((v, oldVal, newVal)->{
+            System.out.print(newVal);
+        });
 
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20,20,20,20));
