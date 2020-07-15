@@ -66,11 +66,22 @@ public class Main extends Application{
 
         helpMenu.getItems().addAll(showLines, autoSave);
 
+        // Difficulty RadioMenuItems
+        Menu diffMenu = new Menu("Difficulty");
+        ToggleGroup diffToggle = new ToggleGroup();
 
+        RadioMenuItem easy = new RadioMenuItem("easy");
+        RadioMenuItem medium = new RadioMenuItem("medium");
+        RadioMenuItem hard = new RadioMenuItem("hard");
+        diffMenu.getItems().addAll(easy, medium, hard);
+
+        easy.setToggleGroup(diffToggle);
+        medium.setToggleGroup(diffToggle);
+        hard.setToggleGroup(diffToggle);
 
         // Main menu bar
         MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(fileMenu, editMenu, helpMenu);
+        menuBar.getMenus().addAll(fileMenu, editMenu, helpMenu, diffMenu);
 
 
 
