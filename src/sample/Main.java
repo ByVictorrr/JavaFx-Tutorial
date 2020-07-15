@@ -6,11 +6,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
+
     Stage window;
+    Button button;
 
     public static void main(String[] args) {
         launch(args);
@@ -19,53 +22,25 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
-        window.setTitle("thenewboston - JavaFX");
+        window.setTitle("thenewboston");
 
-        //GridPane with 10px padding around edge
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.setVgap(8);
-        grid.setHgap(10);
-
-        //Name Label - constrains use (child, column, row)
-        Label nameLabel = new Label("Username:");
-        //nameLabel.setStyle("-fx-text-fill: aqua");
-        nameLabel.setId("bold-label");
-        GridPane.setConstraints(nameLabel, 0, 0);
-
-        //Name Input
-        TextField nameInput = new TextField("Bucky");
-        GridPane.setConstraints(nameInput, 1, 0);
-
-        //Password Label
-        Label passLabel = new Label("Password:");
-        GridPane.setConstraints(passLabel, 0, 1);
-
-        //Password Input
-        TextField passInput = new TextField();
-        passInput.setPromptText("password");
-        GridPane.setConstraints(passInput, 1, 1);
-
-        //Login
-        Button loginButton = new Button("Log In");
-        GridPane.setConstraints(loginButton, 1, 2);
-
-        /* First way to change color scheme
-        loginButton.setOnAction(e->{
-            setUserAgentStylesheet(STYLESHEET_CASPIAN);
+        Person bucky = new Person();
+        // whenever firstName changes
+        bucky.firstNameProperty().addListener((v,oldV, newV)->{
+            System.out.println("Name changed to " + newV);
+            System.out.println("firstNameProperty(): " + bucky.firstNameProperty());
+            System.out.println("getFirstName(): " + bucky.getFirstName());
         });
-         */
-        // Sign up
-        Button signUpButton = new Button("Sign UP");
-        signUpButton.getStyleClass().add("button-blue");
-        GridPane.setConstraints(signUpButton, 1,3);
 
 
-        //Add everything to grid
-        grid.getChildren().addAll(nameLabel, nameInput, passLabel, passInput, loginButton, signUpButton);
+        button = new Button("Submit");
+        button.setOnAction(e->bucky.setFirstName("Porky"));
 
-        Scene scene = new Scene(grid, 300, 200);
-        scene.getStylesheets().add(getClass().getResource("Viper.css").toExternalForm());
+
+
+        StackPane layout = new StackPane();
+        layout.getChildren().add(button);
+        Scene scene = new Scene(layout, 300, 250);
         window.setScene(scene);
         window.show();
     }
