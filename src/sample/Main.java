@@ -1,6 +1,5 @@
 package sample;
 
-import com.sun.source.tree.Tree;
 import javafx.application.Application;
 import javafx.application.Preloader;
 import javafx.beans.Observable;
@@ -20,8 +19,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
     Stage window;
-    TableView<Product> table;
-    TextField nameInput, priceInput, quantityInput;
+    BorderPane layout;
 
    public static void main(String[] args) {
         launch(args); // method inside application class
@@ -31,86 +29,62 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception{
        window = primaryStage;
        window.setTitle("ComboBox demo");
+       //File Menu
+        Menu fileMenu = new Menu("File");
+        // Menu items
+        MenuItem newFile = new MenuItem("New ...");
+        newFile.setOnAction(e->System.out.print("hi"));
+        fileMenu.getItems().add(new MenuItem("Save ..."));
+        fileMenu.getItems().add(new MenuItem("Open ...")); // ... means it has a submenu
+        fileMenu.getItems().add(new SeparatorMenuItem());
+        fileMenu.getItems().add(new MenuItem("Settings ..."));
+        fileMenu.getItems().add(new MenuItem("Exit"));
+        fileMenu.getItems().add(newFile);
 
-       // Name column
-        TableColumn<Product, String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setMinWidth(200);
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name")); // tie data together
+        // Edit menu
+        Menu editMenu = new Menu("_Edit"); // "_" underscore makes so u can use shortcuts
+        editMenu.getItems().add(new MenuItem("Copy"));
+        editMenu.getItems().add(new MenuItem("Cut"));
+        MenuItem paste = new MenuItem("Paste");
+        paste.setDisable(false); // not able to select it
+        editMenu.getItems().add(paste);
 
-        // Price Column
-        TableColumn<Product, String> priceColumn = new TableColumn<>("Price");
-        priceColumn.setMinWidth(200);
-        priceColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("price")); // tie data together
+        /* HOW can we toggle a menu Item? */
 
-        // Price Column
-        TableColumn<Product, String> quantityColumn = new TableColumn<>("Quantity");
-        quantityColumn.setMinWidth(200);
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("quantity")); // tie data together
+        // Help menu
+        Menu helpMenu = new Menu("Help");
+        CheckMenuItem showLines = new CheckMenuItem("Show Line Numbers");
+        showLines.setOnAction(e->{
+             if(showLines.isSelected()){
+               System.out.println("Program will display line numbers now");
+             }else{
+                 System.out.println("Hiding line numbers");
+             }
+        });
+        CheckMenuItem autoSave = new CheckMenuItem("Enable Autosave");
+        autoSave.setSelected(true); // start of program have it checked
 
-        // Name input
-        nameInput = new TextField();
-        nameInput.setPromptText("Name");
-        // Price input
-        priceInput = new TextField();
-        priceInput.setPromptText("price");
-        // Price input
-        quantityInput = new TextField();
-        quantityInput.setPromptText("quantity");
-
-        // Btn
-        Button addBtn = new Button("add");
-        Button delBtn = new Button("delete");
-        addBtn.setOnAction(e->addBTNClicked());
-        delBtn.setOnAction(e->delBTNClicked());
-
-        HBox hbox = new HBox();
-        hbox.setPadding(new Insets(10,10,10,10));
-        hbox.setSpacing(10);
-        hbox.getChildren().addAll(nameInput,priceInput,quantityInput,addBtn,delBtn);
-
-
-
-
-        table = new TableView<>();
-        table.setItems(getProduct());
-
-        table.getColumns().addAll(priceColumn, nameColumn, quantityColumn);
+        helpMenu.getItems().addAll(showLines, autoSave);
 
 
 
-        VBox layout = new VBox(10);
-        layout.getChildren().addAll(table, hbox);
-        Scene scene = new Scene(layout);
+        // Main menu bar
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().addAll(fileMenu, editMenu, helpMenu);
+
+
+
+        layout = new BorderPane();
+        layout.setTop(menuBar);
+        Scene scene = new Scene(layout, 400, 300);
+
+
+
 
         window.setScene(scene);
         window.show();
 
     }
-    private void addBTNClicked(){
-       Product p=new Product(nameInput.getText(), Double.parseDouble(priceInput.getText()), Integer.parseInt(quantityInput.getText()));
-       table.getItems().add(p);
-       nameInput.clear();
-       priceInput.clear();
-       quantityInput.clear();
-    }
-    private void delBTNClicked(){
-      ObservableList<Product> prodSelected, allProducts;
-      allProducts = table.getItems();
-      prodSelected = table.getSelectionModel().getSelectedItems();
-
-      prodSelected.forEach(allProducts::remove);
-    }
-
-    // Get all of the products
-    public ObservableList<Product> getProduct(){
-        ObservableList<Product> p = FXCollections.observableArrayList();
-        p.add(new Product("Laptop", 859.00, 20));
-        p.add(new Product("Bouncy ball", 2.00, 20));
-        p.add(new Product("Toilet", 99.00, 20));
-        p.add(new Product("Corn", 1.40, 20));
-        return p;
-    }
-
 
 
 }
