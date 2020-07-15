@@ -6,12 +6,9 @@ import javafx.scene.control.Button;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/* Behind the schemes of the .fxml file (breaks up view and logic) */
-public class Controller implements Initializable {
+public class Controller {
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Loading user data...");
-
+    public void loginButtonClicked(){
+        System.out.println("User logged in ...");
     }
 }
