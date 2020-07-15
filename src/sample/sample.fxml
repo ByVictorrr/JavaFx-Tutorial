@@ -8,14 +8,7 @@
 -->
 <VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
       fx:controller="sample.Controller">
-    <!-- These two are equivalent
+    <!-- Initilizer = run code after view loads -->
     <Label text="I love bacon"/>
-    <Label>
-        <text>I love bacon 2</text>
-    </Label>
-    -->
-    <Label text="I love bacon"/>
-    <!-- fx:id=variable in controller class; onAction=#function name -->
-    <Button text="Submit" fx:id="button" onAction="#handleButtonClick"/>
 
 </VBox>
