@@ -8,7 +8,9 @@
 -->
 <VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
       fx:controller="sample.Controller">
-    <!-- Initilizer = run code after view loads -->
-    <Label text="I love bacon"/>
+    <!-- Binding in fxml -->
+    <Label text="I love bacon" fx:id="firstLabel"/>
+    <!-- $ means a reference -->
+    <Label text="${firstLabel.text}"/>
 
 </VBox>
