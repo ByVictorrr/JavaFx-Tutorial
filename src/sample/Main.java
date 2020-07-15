@@ -1,100 +1,73 @@
 package sample;
-
 import javafx.application.Application;
-import javafx.application.Preloader;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+public class Main extends Application {
 
-public class Main extends Application{
     Stage window;
-    BorderPane layout;
 
-   public static void main(String[] args) {
-        launch(args); // method inside application class
+    public static void main(String[] args) {
+        launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-       window = primaryStage;
-       window.setTitle("ComboBox demo");
-       //File Menu
-        Menu fileMenu = new Menu("File");
-        // Menu items
-        MenuItem newFile = new MenuItem("New ...");
-        newFile.setOnAction(e->System.out.print("hi"));
-        fileMenu.getItems().add(new MenuItem("Save ..."));
-        fileMenu.getItems().add(new MenuItem("Open ...")); // ... means it has a submenu
-        fileMenu.getItems().add(new SeparatorMenuItem());
-        fileMenu.getItems().add(new MenuItem("Settings ..."));
-        fileMenu.getItems().add(new MenuItem("Exit"));
-        fileMenu.getItems().add(newFile);
+    public void start(Stage primaryStage) throws Exception {
+        window = primaryStage;
+        window.setTitle("thenewboston - JavaFX");
 
-        // Edit menu
-        Menu editMenu = new Menu("_Edit"); // "_" underscore makes so u can use shortcuts
-        editMenu.getItems().add(new MenuItem("Copy"));
-        editMenu.getItems().add(new MenuItem("Cut"));
-        MenuItem paste = new MenuItem("Paste");
-        paste.setDisable(false); // not able to select it
-        editMenu.getItems().add(paste);
+        //GridPane with 10px padding around edge
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setVgap(8);
+        grid.setHgap(10);
 
-        /* HOW can we toggle a menu Item? */
+        //Name Label - constrains use (child, column, row)
+        Label nameLabel = new Label("Username:");
+        //nameLabel.setStyle("-fx-text-fill: aqua");
+        nameLabel.setId("bold-label");
+        GridPane.setConstraints(nameLabel, 0, 0);
 
-        // Help menu
-        Menu helpMenu = new Menu("Help");
-        CheckMenuItem showLines = new CheckMenuItem("Show Line Numbers");
-        showLines.setOnAction(e->{
-             if(showLines.isSelected()){
-               System.out.println("Program will display line numbers now");
-             }else{
-                 System.out.println("Hiding line numbers");
-             }
+        //Name Input
+        TextField nameInput = new TextField("Bucky");
+        GridPane.setConstraints(nameInput, 1, 0);
+
+        //Password Label
+        Label passLabel = new Label("Password:");
+        GridPane.setConstraints(passLabel, 0, 1);
+
+        //Password Input
+        TextField passInput = new TextField();
+        passInput.setPromptText("password");
+        GridPane.setConstraints(passInput, 1, 1);
+
+        //Login
+        Button loginButton = new Button("Log In");
+        GridPane.setConstraints(loginButton, 1, 2);
+
+        /* First way to change color scheme
+        loginButton.setOnAction(e->{
+            setUserAgentStylesheet(STYLESHEET_CASPIAN);
         });
-        CheckMenuItem autoSave = new CheckMenuItem("Enable Autosave");
-        autoSave.setSelected(true); // start of program have it checked
-
-        helpMenu.getItems().addAll(showLines, autoSave);
-
-        // Difficulty RadioMenuItems
-        Menu diffMenu = new Menu("Difficulty");
-        ToggleGroup diffToggle = new ToggleGroup();
-
-        RadioMenuItem easy = new RadioMenuItem("easy");
-        RadioMenuItem medium = new RadioMenuItem("medium");
-        RadioMenuItem hard = new RadioMenuItem("hard");
-        diffMenu.getItems().addAll(easy, medium, hard);
-
-        easy.setToggleGroup(diffToggle);
-        medium.setToggleGroup(diffToggle);
-        hard.setToggleGroup(diffToggle);
-
-        // Main menu bar
-        MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(fileMenu, editMenu, helpMenu, diffMenu);
+         */
+        // Sign up
+        Button signUpButton = new Button("Sign UP");
+        signUpButton.getStyleClass().add("button-blue");
+        GridPane.setConstraints(signUpButton, 1,3);
 
 
+        //Add everything to grid
+        grid.getChildren().addAll(nameLabel, nameInput, passLabel, passInput, loginButton, signUpButton);
 
-        layout = new BorderPane();
-        layout.setTop(menuBar);
-        Scene scene = new Scene(layout, 400, 300);
-
-
-
-
+        Scene scene = new Scene(grid, 300, 200);
+        scene.getStylesheets().add(getClass().getResource("Viper.css").toExternalForm());
         window.setScene(scene);
         window.show();
-
     }
 
 

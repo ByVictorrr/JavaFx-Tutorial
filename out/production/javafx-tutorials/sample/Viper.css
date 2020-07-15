@@ -1,0 +1,21 @@
+.root{
+    -fx-background-color: #8A2BE2;
+    -fx-font-size: 11;
+}
+/* Applies to all labels (.label applies to all Label objects)*/
+.label{
+    -fx-text-fill: blue;
+}
+.button{
+    -fx-background-color: linear-gradient(#dc9656, #ab4642);
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 6;
+}
+
+/* Custom ones (classes) */
+.button-blue{
+    -fx-background-color: #7cafc2;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 4;
+}
+
